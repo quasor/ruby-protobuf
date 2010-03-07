@@ -680,6 +680,8 @@ module Protobuf
             else
               val = \
                 case val
+                when String
+                  field.type.const_get(val) rescue (field.type.const_get(field.type.name_by_value(val.to_i)) rescue nil)
                 when Symbol
                   field.type.const_get(val) rescue nil
                 when Integer
